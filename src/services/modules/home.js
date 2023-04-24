@@ -1,7 +1,7 @@
-import hyRequest from "../request";
+import request from "../request";
 
 export function getHomeHotSuggests() {
-  return hyRequest.get({
+  return request.get({
     url: "/home/hotSuggests",
   });
 }

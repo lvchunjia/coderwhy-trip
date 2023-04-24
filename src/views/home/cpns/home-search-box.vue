@@ -14,6 +14,8 @@ const cityClick = () => {
 };
 
 const positionClick = () => {
+  // 获取所在经纬度API
+  // 需要在https环境下使用，否则存在兼容性问题
   navigator.geolocation.getCurrentPosition(
     (res) => {
       console.log("获取位置成功:", res);
