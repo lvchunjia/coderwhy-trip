@@ -15,7 +15,7 @@ const cityClick = () => {
 
 const positionClick = () => {
   // 获取所在经纬度API
-  // 需要在https环境下使用，否则存在兼容性问题
+  // chrome浏览器存在兼容性问题（该API chrome通过将ip发送到谷歌的服务器解析获取地址 需科学上网才能获取地址）
   navigator.geolocation.getCurrentPosition(
     (res) => {
       console.log("获取位置成功:", res);
@@ -43,6 +43,14 @@ const endDate = ref(formatMonthDay(newDate));
 const stayCount = ref(getDiffDays(nowDate, newDate));
 
 const showCalendar = ref(false);
+const formatter = (day) => {
+  if (day.type === "start") {
+    day.bottomInfo = "入住";
+  } else if (day.type === "end") {
+    day.bottomInfo = "离店";
+  }
+  return day;
+};
 const onConfirm = (value) => {
   // 1.设置日期
   const selectStartDate = value[0];
@@ -57,6 +65,18 @@ const onConfirm = (value) => {
 // 热门建议
 const homeStore = useHomeStore();
 const { hotSuggests } = storeToRefs(homeStore);
+
+// 开始搜索
+const searchBtnClick = () => {
+  router.push({
+    path: "/search",
+    query: {
+      startDate: startDate.value,
+      endDate: endDate.value,
+      currentCity: currentCity.value.cityName,
+    },
+  });
+};
 </script>
 
 <template>
@@ -80,7 +100,7 @@ const { hotSuggests } = storeToRefs(homeStore);
           <span class="tip">入住</span>
           <span class="time">{{ startDate }}</span>
         </div>
-        <div class="stay">共{{ stayCount }}晚</div>
+        <div class="stay">共 {{ stayCount }} 晚</div>
       </div>
       <div class="end">
         <div class="date">
@@ -95,6 +115,7 @@ const { hotSuggests } = storeToRefs(homeStore);
       color="#ff9854"
       :round="false"
       :show-confirm="false"
+      :formatter="formatter"
       @confirm="onConfirm"
     />
 
@@ -120,14 +141,15 @@ const { hotSuggests } = storeToRefs(homeStore);
         </div>
       </template>
     </div>
+
+    <!-- 搜索按钮 -->
+    <div class="section search-btn">
+      <div class="btn" @click="searchBtnClick">开始搜索</div>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.search-box {
-  --van-calendar-popup-height: 100%;
-}
-
 .location {
   display: flex;
   align-items: center;
@@ -223,6 +245,21 @@ const { hotSuggests } = storeToRefs(homeStore);
     border-radius: 14px;
     font-size: 12px;
     line-height: 1;
+  }
+}
+
+.search-btn {
+  .btn {
+    width: 342px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-linear-gradient);
   }
 }
 </style>
