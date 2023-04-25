@@ -13,6 +13,9 @@ dependencies:
   pinia:
     specifier: ^2.0.32
     version: 2.0.32(vue@3.2.47)
+  underscore:
+    specifier: ^1.13.6
+    version: 1.13.6
   vant:
     specifier: ^4.2.0
     version: 4.2.0(vue@3.2.47)
@@ -955,6 +958,10 @@ packages:
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
     dev: true
+
+  /underscore@1.13.6:
+    resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
+    dev: false
 
   /unplugin-vue-components@0.24.1(vue@3.2.47):
     resolution: {integrity: sha512-T3A8HkZoIE1Cja95xNqolwza0yD5IVlgZZ1PVAGvVCx8xthmjsv38xWRCtHtwl+rvZyL9uif42SRkDGw9aCfMA==}

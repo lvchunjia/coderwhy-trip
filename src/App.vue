@@ -1,6 +1,6 @@
 <script setup>
 import tabBar from "@/components/tabBar/tabBar.vue";
-// import Loading from "@/components/loading/loading.vue"
+import Loading from "@/components/loading/loading.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -11,6 +11,7 @@ const route = useRoute();
     <router-view></router-view>
 
     <tab-bar v-show="!route.meta.hideTabBar" />
+    <loading />
   </div>
 </template>
 
