@@ -6,7 +6,7 @@ const useCityStore = defineStore("city", {
     allCities: {},
 
     currentCity: {
-      cityName: "广州",
+      cityName: "北京",
     },
   }),
   actions: {
