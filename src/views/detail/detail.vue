@@ -4,31 +4,18 @@ import { useRoute, useRouter } from "vue-router";
 import { getDetailInfos } from "@/services";
 
 import TabControl from "@/components/tab-control/tab-control.vue";
-import DetailSwipe from "./cpns/detail_01-swipe.vue";
+import DetailSwipe from "./cpns/detail-swipe.vue";
 import DetailInfos from "./cpns/detail_02-infos.vue";
 import DetailFacility from "./cpns/detail_03-facility.vue";
 import DetailLandlord from "./cpns/detail_04-landlord.vue";
 import DetailComment from "./cpns/detail_05-comment.vue";
 import DetailNotice from "./cpns/detail_06-notice.vue";
-import DetailMap from "./cpns/detail_07-map.vue";
+// import DetailMap from "./cpns/detail_07-map.vue";
 import DetailIntro from "./cpns/detail_08-intro.vue";
 import useScroll from "@/hooks/useScroll";
 
 const router = useRouter();
 const route = useRoute();
-const houseId = route.params.id;
-
-// 发送网络请求获取数据
-const detailInfos = ref({});
-const mainPart = computed(() => detailInfos.value.mainPart);
-getDetailInfos(houseId).then((res) => {
-  detailInfos.value = res.data;
-});
-
-// 监听返回按钮的点击
-const onClickLeft = () => {
-  router.back();
-};
 
 // tabControl相关的操作
 const detailRef = ref();
@@ -36,6 +23,19 @@ const { scrollTop } = useScroll(detailRef);
 const showTabControl = computed(() => {
   return scrollTop.value >= 300;
 });
+
+// 监听返回按钮的点击
+const onClickLeft = () => {
+  router.back();
+};
+
+// 发送请求获取数据
+const detailInfos = ref({});
+const houseId = route.params.id;
+getDetailInfos(houseId).then((res) => {
+  detailInfos.value = res.data;
+});
+const mainPart = computed(() => detailInfos.value.mainPart);
 
 // const landlordRef = ref()
 // const sectionEls = []
@@ -112,7 +112,9 @@ watch(scrollTop, (newValue) => {
       @click-left="onClickLeft"
     />
     <div class="main" v-if="mainPart" v-memo="[mainPart]">
+      <!-- 轮播图 -->
       <detail-swipe :swipe-data="mainPart.topModule.housePicture.housePics" />
+
       <detail-infos
         name="描述"
         :ref="getSectionRef"
@@ -138,11 +140,11 @@ watch(scrollTop, (newValue) => {
         :ref="getSectionRef"
         :order-rules="mainPart.dynamicModule.rulesModule.orderRules"
       />
-      <detail-map
+      <!-- <detail-map
         name="周边"
         :ref="getSectionRef"
         :position="mainPart.dynamicModule.positionModule"
-      />
+      /> -->
       <detail-intro :price-intro="mainPart.introductionModule" />
     </div>
     <div class="footer">
