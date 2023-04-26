@@ -1,3 +1,12 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-25 22:57:16
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 21:47:53
+ * @FilePath: \coderwhy-trip\src\views\detail\detail.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -5,29 +14,17 @@ import { getDetailInfos } from "@/services";
 
 import TabControl from "@/components/tab-control/tab-control.vue";
 import DetailSwipe from "./cpns/detail-swipe.vue";
-import DetailInfos from "./cpns/detail_02-infos.vue";
-import DetailFacility from "./cpns/detail_03-facility.vue";
-import DetailLandlord from "./cpns/detail_04-landlord.vue";
-import DetailComment from "./cpns/detail_05-comment.vue";
-import DetailNotice from "./cpns/detail_06-notice.vue";
-// import DetailMap from "./cpns/detail_07-map.vue";
-import DetailIntro from "./cpns/detail_08-intro.vue";
+import DetailInfos from "./cpns/detail-infos.vue";
+import DetailFacility from "./cpns/detail-facility.vue";
+import DetailLandlord from "./cpns/detail-landlord.vue";
+import DetailComment from "./cpns/detail-comment.vue";
+import DetailNotice from "./cpns/detail-notice.vue";
+import DetailMap from "./cpns/detail-map.vue";
+import DetailIntro from "./cpns/detail-intro.vue";
 import useScroll from "@/hooks/useScroll";
 
 const router = useRouter();
 const route = useRoute();
-
-// tabControl相关的操作
-const detailRef = ref();
-const { scrollTop } = useScroll(detailRef);
-const showTabControl = computed(() => {
-  return scrollTop.value >= 300;
-});
-
-// 监听返回按钮的点击
-const onClickLeft = () => {
-  router.back();
-};
 
 // 发送请求获取数据
 const detailInfos = ref({});
@@ -37,21 +34,30 @@ getDetailInfos(houseId).then((res) => {
 });
 const mainPart = computed(() => detailInfos.value.mainPart);
 
-// const landlordRef = ref()
-// const sectionEls = []
-// const getSectionRef = (value) => {
-//   sectionEls.push(value.$el)
-// }
-const sectionEls = ref({});
-const names = computed(() => {
-  return Object.keys(sectionEls.value);
+// 监听返回按钮的点击
+const onClickLeft = () => {
+  router.back();
+};
+
+// tabControl相关的操作
+const detailRef = ref();
+const { scrollTop } = useScroll(detailRef);
+const showTabControl = computed(() => {
+  return scrollTop.value >= 300;
 });
+
+const sectionEls = ref({});
+// 获取所有组件对应name位置
 const getSectionRef = (value) => {
   if (!value) return;
   const name = value.$el.getAttribute("name");
   sectionEls.value[name] = value.$el;
 };
+const names = computed(() => {
+  return Object.keys(sectionEls.value);
+});
 
+// 点击tab-control滚动到对应位置
 let isClick = false;
 let currentDistance = -1;
 const tabClick = (index) => {
@@ -91,7 +97,6 @@ watch(scrollTop, (newValue) => {
       break;
     }
   }
-  // console.log(index)
   tabControlRef.value?.setCurrentIndex(index);
 });
 </script>
@@ -99,7 +104,7 @@ watch(scrollTop, (newValue) => {
 <template>
   <div class="detail top-page" ref="detailRef">
     <tab-control
-      v-if="showTabControl"
+      v-show="showTabControl"
       class="tabs"
       :titles="names"
       @tabItemClick="tabClick"
@@ -120,31 +125,37 @@ watch(scrollTop, (newValue) => {
         :ref="getSectionRef"
         :top-infos="mainPart.topModule"
       />
+
       <detail-facility
         name="设施"
         :ref="getSectionRef"
         :house-facility="mainPart.dynamicModule.facilityModule.houseFacility"
       />
+
       <detail-landlord
         name="房东"
         :ref="getSectionRef"
         :landlord="mainPart.dynamicModule.landlordModule"
       />
+
       <detail-comment
         name="评论"
         :ref="getSectionRef"
         :comment="mainPart.dynamicModule.commentModule"
       />
+
       <detail-notice
         name="须知"
         :ref="getSectionRef"
         :order-rules="mainPart.dynamicModule.rulesModule.orderRules"
       />
-      <!-- <detail-map
+
+      <detail-map
         name="周边"
         :ref="getSectionRef"
         :position="mainPart.dynamicModule.positionModule"
-      /> -->
+      />
+
       <detail-intro :price-intro="mainPart.introductionModule" />
     </div>
     <div class="footer">

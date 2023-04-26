@@ -8,7 +8,11 @@ const route = useRoute();
 
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-slot="props">
+      <keep-alive include="home">
+        <component :is="props.Component"></component>
+      </keep-alive>
+    </router-view>
 
     <tab-bar v-show="!route.meta.hideTabBar" />
     <loading />

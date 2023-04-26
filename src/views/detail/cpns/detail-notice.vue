@@ -1,3 +1,23 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-25 22:57:16
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 20:29:12
+ * @FilePath: \coderwhy-trip\src\views\detail\cpns\detail-notice.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
+<script setup>
+import DetailSection from "@/components/detail-section/detail-section.vue";
+
+defineProps({
+  orderRules: {
+    type: Array,
+    default: () => [],
+  },
+});
+</script>
+
 <template>
   <div class="notice">
     <detail-section title="预定须知">
@@ -13,18 +33,6 @@
     </detail-section>
   </div>
 </template>
-
-<script setup>
-import DetailSection from "@/components/detail-section/detail-section.vue"
-
-defineProps({
-  orderRules: {
-    type: Array,
-    default: () => []
-  }
-})
-
-</script>
 
 <style lang="less" scoped>
 .notice-inner {

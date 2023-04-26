@@ -1,16 +1,34 @@
+<script setup>
+defineProps({
+  topInfos: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+</script>
+
 <template>
   <div class="infos">
+    <!-- 标题 -->
     <div class="name">{{ topInfos.houseName }}</div>
+
+    <!-- 标签 -->
     <div class="tags">
       <template v-for="(item, index) in topInfos.houseTags" :key="index">
-        <span 
-          class="item" 
+        <span
+          class="item"
           v-if="item.tagText"
-          :style="{ color: item.tagText.color, background: item.tagText.background.color }">
+          :style="{
+            color: item.tagText.color,
+            background: item.tagText.background.color,
+          }"
+        >
           {{ item.tagText.text }}
         </span>
       </template>
     </div>
+
+    <!-- 评论 -->
     <div class="comment extra">
       <div class="left">
         <span class="score">{{ topInfos.commentBrief.overall }}</span>
@@ -24,6 +42,8 @@
         </span>
       </div>
     </div>
+
+    <!-- 位置 -->
     <div class="position extra">
       <div class="left address">
         {{ topInfos.nearByPosition.address }}
@@ -35,17 +55,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-
-defineProps({
-  topInfos: {
-    type: Object,
-    default: () => ({})
-  }
-})
-
-</script>
 
 <style lang="less" scoped>
 .infos {

@@ -1,15 +1,41 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-25 22:57:16
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 20:21:54
+ * @FilePath: \coderwhy-trip\src\views\detail\cpns\detail-facility.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
+<script setup>
+import DetailSection from "@/components/detail-section/detail-section.vue";
+
+defineProps({
+  houseFacility: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+</script>
+
 <template>
   <div class="facility">
     <detail-section title="房屋设施" more-text="查看全部设施">
       <div class="facility-inner">
-        <template v-for="(item, index) in houseFacility.houseFacilitys" :key="index">
+        <template
+          v-for="(item, index) in houseFacility.houseFacilitys"
+          :key="index"
+        >
           <div class="item" v-if="houseFacility.facilitySort?.includes(index)">
             <div class="head">
-              <img :src="item.icon" alt="">
+              <img :src="item.icon" alt="" />
               <div class="text">{{ item.groupName }}</div>
             </div>
             <div class="list">
-              <template v-for="(iten, indey) in item.facilitys.slice(0, 4)" :key="indey">
+              <template
+                v-for="(iten, indey) in item.facilitys.slice(0, 4)"
+                :key="indey"
+              >
                 <div class="iten">
                   <i class="icon_check icon"></i>
                   <span>{{ iten.name }}</span>
@@ -22,18 +48,6 @@
     </detail-section>
   </div>
 </template>
-
-<script setup>
-import DetailSection from "@/components/detail-section/detail-section.vue"
-
-defineProps({
-  houseFacility: {
-    type: Object,
-    default: () => ({})
-  }
-})
-
-</script>
 
 <style lang="less" scoped>
 .facility-inner {

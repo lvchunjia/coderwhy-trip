@@ -1,3 +1,12 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-24 20:21:13
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 22:17:25
+ * @FilePath: \coderwhy-trip\src\views\home\home.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
 <script setup>
 import { ref, computed, watch, onActivated } from "vue";
 import useHomeStore from "@/stores/modules/home";
@@ -16,7 +25,8 @@ homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
 
 // 监听滚动到底部
-const { isReachBottom, scrollTop } = useScroll();
+const homeRef = ref();
+const { isReachBottom, scrollTop } = useScroll(homeRef);
 watch(isReachBottom, (newValue) => {
   if (newValue) {
     homeStore.fetchHouselistData().then(() => {
@@ -30,7 +40,7 @@ const isShowSearchBar = computed(() => {
   return scrollTop.value >= 360;
 });
 
-const homeRef = ref();
+// 跳转回home时，保留原来位置
 onActivated(() => {
   homeRef.value?.scrollTo({
     top: scrollTop.value,
@@ -57,6 +67,10 @@ onActivated(() => {
 <style scoped lang="less">
 .home {
   padding-bottom: 100px;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 60px;
 
   .banner {
     img {

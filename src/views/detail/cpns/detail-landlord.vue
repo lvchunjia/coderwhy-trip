@@ -1,14 +1,34 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-25 22:57:16
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 20:25:16
+ * @FilePath: \coderwhy-trip\src\views\detail\cpns\detail-landlord.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
+<script setup>
+import DetailSection from "@/components/detail-section/detail-section.vue";
+
+defineProps({
+  landlord: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+</script>
+
 <template>
   <div class="landlord">
     <detail-section title="房东介绍" more-text="查看房东主页">
       <div class="intro">
         <div class="top">
-          <img :src="landlord.topScroll" alt="">
+          <img :src="landlord.topScroll" alt="" />
         </div>
         <div class="header">
           <div class="left">
             <div class="avatar">
-              <img :src="landlord.hotelLogo" alt="">
+              <img :src="landlord.hotelLogo" alt="" />
             </div>
             <div class="info">
               <div class="name">{{ landlord.hotelName }}</div>
@@ -16,7 +36,11 @@
                 <template v-for="(item, index) in landlord.hotelTags">
                   <div class="item" :style="{ color: item.tagText.color }">
                     <span>{{ item.tagText.text }}</span>
-                    <span v-if="index !== landlord.hotelTags.length - 1" class="divider">|</span>
+                    <span
+                      v-if="index !== landlord.hotelTags.length - 1"
+                      class="divider"
+                      >|</span
+                    >
                   </div>
                 </template>
               </div>
@@ -27,7 +51,7 @@
           </div>
         </div>
         <div class="bottom">
-          <template v-for="(item, index) in landlord.hotelSummary">
+          <template v-for="(item, index) in landlord.hotelSummary" :key="index">
             <div class="item">
               <div class="title">{{ item.title }}</div>
               <div class="score">{{ item.introduction }}</div>
@@ -39,18 +63,6 @@
     </detail-section>
   </div>
 </template>
-
-<script setup>
-import DetailSection from "@/components/detail-section/detail-section.vue"
-
-defineProps({
-  landlord: {
-    type: Object,
-    default: () => ({})
-  }
-})
-
-</script>
 
 <style lang="less" scoped>
 .intro {
@@ -101,7 +113,7 @@ defineProps({
         padding: 0 12px;
         font-size: 12px;
         color: #fff;
-        background-image: linear-gradient(90deg,#fa8c1d,#fcaf3f);
+        background-image: linear-gradient(90deg, #fa8c1d, #fcaf3f);
       }
     }
   }

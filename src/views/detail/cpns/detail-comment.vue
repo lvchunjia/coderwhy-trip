@@ -1,6 +1,30 @@
+<!--
+ * @Author: jiumingmao 879021430@qq.com
+ * @Date: 2023-04-25 22:57:16
+ * @LastEditors: jiumingmao 879021430@qq.com
+ * @LastEditTime: 2023-04-26 20:27:08
+ * @FilePath: \coderwhy-trip\src\views\detail\cpns\detail_05-comment.vue
+ * @Description: 
+ * Copyright (c) 2023 by jiumingmao 879021430@qq.com, All Rights Reserved.
+-->
+
+<script setup>
+import DetailSection from "@/components/detail-section/detail-section.vue";
+
+defineProps({
+  comment: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+</script>
+
 <template>
   <div class="comment">
-    <detail-section title="热门评论" :more-text="`查看全部${comment.totalCount}条评论`">
+    <detail-section
+      title="热门评论"
+      :more-text="`查看全部${comment.totalCount}条评论`"
+    >
       <div class="comment-inner">
         <div class="header">
           <div class="left">
@@ -12,7 +36,13 @@
               <div class="title">{{ comment.scoreTitle }}</div>
               <div class="count">{{ comment.totalCount }}条评论</div>
               <div class="star">
-                <van-rate v-model="comment.overall" color="#ff9645" size="12" readonly allow-half />
+                <van-rate
+                  v-model="comment.overall"
+                  color="#ff9645"
+                  size="12"
+                  readonly
+                  allow-half
+                />
               </div>
             </div>
           </div>
@@ -24,8 +54,10 @@
         </div>
         <div class="tags">
           <template v-for="(item, index) in comment.commentTagVo" :key="index">
-            <span class="item" 
-                  :style="{ color: item.color, background: item.backgroundColor }">
+            <span
+              class="item"
+              :style="{ color: item.color, background: item.backgroundColor }"
+            >
               {{ item.text }}
             </span>
           </template>
@@ -33,7 +65,7 @@
         <div class="content">
           <div class="user">
             <div class="avatar">
-              <img :src="comment.comment.userAvatars" alt="">
+              <img :src="comment.comment.userAvatars" alt="" />
             </div>
             <div class="profile">
               <div class="name">{{ comment.comment.userName }}</div>
@@ -48,18 +80,6 @@
     </detail-section>
   </div>
 </template>
-
-<script setup>
-import DetailSection from "@/components/detail-section/detail-section.vue"
-
-defineProps({
-  comment: {
-    type: Object,
-    default: () => ({})
-  }
-})
-
-</script>
 
 <style lang="less" scoped>
 .comment-inner {
